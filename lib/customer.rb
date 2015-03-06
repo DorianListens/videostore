@@ -1,5 +1,5 @@
 class Customer
-  attr_reader :name
+  attr_reader :name, :rentals
 
   def initialize(name)
     @name = name
@@ -11,23 +11,67 @@ class Customer
   end
 
   def statement
-    total_amount = 0
-    frequent_renter_points = 0
-    result = "Rental record for #{@name}\n"
-    for rental in @rentals
-      frequent_renter_points += rental.points
-      total_amount += rental.price
-
-      result += rental_string(rental)
-    end
-
-    result += "Amount owed is $#{total_amount}\n"
-    result += "You earned #{frequent_renter_points} frequent renter points"
-    result
+    RentalStatement.new(self).print_statement
   end
-  
+
+end
+
+class RentalStatement
+  def initialize(customer)
+    @customer = customer
+    @rentals = customer.rentals
+  end
+
+  def print_statement
+    lines = []
+    lines << header
+    for rental in @rentals
+      lines << rental_string(rental)
+    end
+    lines << amount_owed
+    lines << total_points
+    print_lines lines
+  end
+
+  def header
+    "Rental record for #{@customer.name}\n"
+  end
+
   def rental_string(rental)
     "\t#{rental.movie.title}\t#{rental.price}\n"
   end
+
+  def print_lines(lines)
+    result = ""
+    lines.each do |line|
+      result += line.to_s
+    end
+    result
+  end
+
+  def amount_owed
+    "Amount owed is $#{total_amount}\n"
+  end
+
+  def total_points
+    "You earned #{frequent_renter_points} frequent renter points"
+  end
+  
+  def total_amount
+    total = 0
+    for rental in @rentals
+      total += rental.price
+    end
+    total
+  end
+  
+  def frequent_renter_points
+    total = 0
+    for rental in @rentals
+      total += rental.points
+    end
+    total
+  end
+
 
 end
