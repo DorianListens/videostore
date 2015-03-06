@@ -16,11 +16,7 @@ class Customer
     result = "Rental record for #{@name}\n"
     for rental in @rentals
       this_amount = rental.price
-
-      frequent_renter_points += 1
-      if rental.movie.price_code == Movie::NEW_RELEASE && rental.days_rented > 1
-        frequent_renter_points += 1
-      end
+      frequent_renter_points += rental.points
 
       result += "\t#{rental.movie.title}\t#{this_amount}\n"
       total_amount += this_amount

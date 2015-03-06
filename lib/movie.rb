@@ -28,4 +28,12 @@ class Movie
     end
     price
   end
+
+  def points_for(days_rented)
+    points = 1
+    if @price_code == Movie::NEW_RELEASE && days_rented > 1
+      points += 1
+    end
+    points
+  end
 end

@@ -9,4 +9,8 @@ class Rental
   def price
     @movie.price_for(@days_rented)
   end
+
+  def points
+    @movie.points_for(@days_rented)
+  end
 end
