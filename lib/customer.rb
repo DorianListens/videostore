@@ -11,7 +11,7 @@ class Customer
   end
 
   def statement
-    RentalStatement.new(self).print_statement
+    HTMLRentalStatement.new(self).print_statement
   end
 
 end
@@ -72,6 +72,14 @@ class RentalStatement
     end
     total
   end
+end
 
-
+class HTMLRentalStatement < RentalStatement
+  def print_lines(lines)
+    result = "<html><head><title>Rental Statement</title></head><body>"
+    lines.each do |line|
+      result += "<p>#{line}</p>"
+    end
+    result += "</body></html>"
+  end
 end

@@ -10,7 +10,9 @@ describe "a customer" do
 
   describe "without any rentals" do
     it "should have an empty statement" do
-      customer.statement.should == "Rental record for Martin\nAmount owed is $0\nYou earned 0 frequent renter points"
+      customer.statement.should include "Rental record for Martin"
+      customer.statement.should include "Amount owed is $0"
+      customer.statement.should include "You earned 0 frequent renter points"
     end
   end
 
