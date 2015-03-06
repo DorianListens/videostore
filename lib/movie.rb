@@ -47,3 +47,16 @@ class NewReleaseMovie < Movie
   end
 end
 
+class AwesomeMovie < Movie
+  def price_for(days_rented)
+    price = days_rented * 9
+  end
+
+  def points_for(days_rented)
+    points = 2
+    if days_rented > 3
+      points += 5
+    end
+    points
+  end
+end
