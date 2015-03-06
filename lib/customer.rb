@@ -24,7 +24,7 @@ class RentalStatement
 
   def print_statement
     lines = []
-    lines << header
+    lines << title
     for rental in @rentals
       lines << rental_string(rental)
     end
@@ -33,7 +33,7 @@ class RentalStatement
     print_lines lines
   end
 
-  def header
+  def title
     "Rental record for #{@customer.name}\n"
   end
 
