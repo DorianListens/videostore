@@ -12,19 +12,12 @@ class Movie
   end
 
   def price_for(days_rented)
-    price = 0
     if @price_code == Movie::REGULAR
-      price += 2
-      if days_rented > 2
-        price += (days_rented - 2) * 1.5
-      end
+      price = PricePolicy.for(days_rented)
     elsif @price_code == Movie::NEW_RELEASE
-      price  += days_rented * 3
+      price = PricePolicy.for_new_release(days_rented)
     elsif @price_code == Movie::CHILDRENS
-      price += 1.5
-      if days_rented > 3
-        price += (days_rented - 3) * 1.5
-      end
+      price = PricePolicy.for_childrens(days_rented)
     end
     price
   end
@@ -37,3 +30,25 @@ class Movie
     points
   end
 end
+
+class PricePolicy
+  def self.for(days_rented)
+    price = 2
+    if days_rented > 2
+      price += (days_rented - 2) * 1.5
+    end
+    price
+  end
+  def self.for_new_release(days_rented)
+    price  = days_rented * 3
+  end
+  
+  def self.for_childrens(days_rented)
+    price = 1.5
+    if days_rented > 3
+      price += (days_rented - 3) * 1.5
+    end
+    price
+  end
+end
+
