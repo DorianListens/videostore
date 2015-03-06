@@ -15,23 +15,7 @@ class Customer
     frequent_renter_points = 0
     result = "Rental record for #{@name}\n"
     for rental in @rentals
-      this_amount = 0
-      case rental.movie.price_code
-        when Movie::REGULAR
-          this_amount += 2
-          if rental.days_rented > 2
-            this_amount += (rental.days_rented - 2) * 1.5
-          end
-        when Movie::NEW_RELEASE
-          this_amount += rental.days_rented * 3
-        when Movie::CHILDRENS
-          this_amount += 1.5
-          if rental.days_rented > 3
-            this_amount += (rental.days_rented - 3) * 1.5
-          end
-        else
-          # do nothing for a while
-      end
+      this_amount = rental.price
 
       frequent_renter_points += 1
       if rental.movie.price_code == Movie::NEW_RELEASE && rental.days_rented > 1
